@@ -21,7 +21,7 @@ class FlaskTestCase(unittest.TestCase):
             db.create_all()
 
         self.test_user = User(email='test@test.com', name='test',
-                              password=generate_password_hash('test123', method='pbkdf2:sha256', salt_length=8))
+                              password=generate_password_hash('test1234', method='pbkdf2:sha256', salt_length=8))
         with self.app.app_context():
             db.session.add(self.test_user)
             db.session.commit()
@@ -57,13 +57,13 @@ class FlaskTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
 
     def teste_rota_de_login(self):
-        response = self.client.post('/login', data=dict(email='test@test.com', password='test123', submit='Log In'),
+        response = self.client.post('/login', data=dict(email='test@test.com', password='test1234', submit='Log In'),
                                     follow_redirects=True)
         self.assertEqual(response.status_code, 200)
 
     def test_get_post(self):
         date_now = datetime.now()
-        post = BlogPost(id=1, title="Titulo teste", subtitle="Subtitulo teste", img_url="https://teste.com",
+        post = BlogPost(id=1, title="Titulo Teste", subtitle="Subtitulo Teste", img_url="https://teste.com",
                         body="Corpo teste", date=date_now)
         with self.app.app_context():
             db.session.add(post)
@@ -73,7 +73,7 @@ class FlaskTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_add_new_post(self):
-        self.client.post('/login', data=dict(email='test@test.com', password='test123', submit='Log In'),
+        self.client.post('/login', data=dict(email='test@test.com', password='test1234', submit='Log In'),
                          follow_redirects=True)
 
         response = self.client.post('/new-post',
@@ -148,7 +148,7 @@ class FlaskTestCase(unittest.TestCase):
                          follow_redirects=True)
 
         response = self.client.post('/post/1',
-                                    data=dict(comment_text='Teste de comentario', submit='Submit Comment'),
+                                    data=dict(comment_text='Teste de Comentario', submit='Submit Comment'),
                                     follow_redirects=True)
 
         with self.app.app_context():
